@@ -31,16 +31,16 @@ public class Property {
     @NotBlank
     @Size(max = 500)
     private String description;
-    @NotBlank 
+    @NotNull 
     @Positive
     private double price;
-    @NotBlank
+    @NotNull
     @Positive
     private int bedrooms;
-    @NotBlank
+    @NotNull
     @Positive
     private double bathrooms;
-    @NotBlank
+    @NotNull
     @Positive
     private double area;
     @NotBlank
@@ -50,13 +50,12 @@ public class Property {
     @NotBlank
     private String state;
     @NotBlank
-    @Pattern(regexp = "^[0-9{5(?:-[0-9]{4})?$", message = "Invalid ZIP code format")
-    private String zipcode;
+    @Pattern(regexp = "^[0-9]{5}(?:-[0-9]{4})?$", message = "Invalid ZIP code format")
+    private String ZipCode;
     @NotBlank
     private String propertyType;
     @NotNull
     private LocalDate listingDate;
-    @NotNull
-    private boolean isAvailable;
+    private boolean IsAvailable;
 
 }
