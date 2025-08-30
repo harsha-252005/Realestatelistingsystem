@@ -22,4 +22,7 @@ public class PropertyService {
     public Optional<Property>getPropertyById(Long id){
         return propertyRepository.findById(id);
     }
+    public List<Property> filterProperties(Double minPrice,double maxPrice,Integer bedrooms,String city){
+        return 
+    }
 }
