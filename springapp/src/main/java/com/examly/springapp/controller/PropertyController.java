@@ -1,6 +1,8 @@
 package com.examly.springapp.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -32,42 +34,46 @@ public class PropertyController {
     }
     @PostMapping
     public ResponseEntity<?>createProperty (@Valid @RequestBody Property property){
-        try {
+       
             Property createdProperty=propertyService.addProperty(property);
             return new ResponseEntity<>(createdProperty,HttpStatus.CREATED);
-            
-        } catch (Exception e) {
-            return new ResponseEntity<>("Validation failed: "+e.getMessage(),HttpStatus.BAD_REQUEST);
-        }
+        
+        
     }
     @GetMapping
     public ResponseEntity<List<Property>>getAllProperty(){
         List<Property>properties=propertyService.getAllProperties();
-        return new ResponseEntity<>(properties,HttpStatus.OK);
+        return ResponseEntity.ok(properties);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?>getPropertyByid(@PathVariable long id){
+    public ResponseEntity<?>getPropertyById(@PathVariable Long id){
        Optional<Property>property=propertyService.getPropertyById(id);
         if(property.isPresent()){
-            return new ResponseEntity<>(property.get(),HttpStatus.OK);
+            return ResponseEntity.ok(property.get());
         }
-        else{
-            return new ResponseEntity<>("Property not found",HttpStatus.NOT_FOUND);
-
-        }   
+        Map<String,String>error=new HashMap<>();
+        error.put("message", "Property not found.");
+        return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
     }
     @GetMapping("/filter")
-    public ResponseEntity<List<Property>>filterProperty(@RequestParam double minprice,@RequestParam double maxprice,@RequestParam int bedrooms,@RequestParam String city){
-        List<Property>filteredproperties=propertyService.getPropertiesByRangeCityandBedrooms(minprice, maxprice, bedrooms, city);
-        return new ResponseEntity<>(filteredproperties,HttpStatus.OK);
+    public ResponseEntity<List<Property>>filterProperty(
+    @RequestParam(required = false,name="minPrice") Double minPrice,
+    @RequestParam (required = false,name="maxPrice") Double maxPrice,
+    @RequestParam (required = false) Integer bedrooms,
+    @RequestParam (required = false) String city){
+        List<Property>filteredproperties=propertyService.filterProperties(minPrice,maxPrice,bedrooms,city);
+        return ResponseEntity.ok(filteredproperties);
     }
     @PutMapping("/{id}")
     public ResponseEntity<?>updateProperties(@PathVariable Long id,@Valid @RequestBody Property property ){
         try {
          Property updateProperty=propertyService.updateProperty(id,property);
-         return new ResponseEntity<>(updateProperty,HttpStatus.OK);
+         return ResponseEntity.ok(updateProperty);
         } catch (Exception e) {
-        return new ResponseEntity<>("Property not found",HttpStatus.NOT_FOUND);
+       Map<String,String>error=new HashMap<>();
+       error.put("message", "Property not found");
+       return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+
 
         }
     }
@@ -77,7 +83,9 @@ public class PropertyController {
          propertyService.deleteProperty(id);
          return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
-        return new ResponseEntity<>("Property not found",HttpStatus.NOT_FOUND);
+         Map<String,String>error=new HashMap<>();
+         error.put("message", "Property not found");
+        return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
 
         }
     }
