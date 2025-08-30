@@ -1,0 +1,224 @@
+[
+  {
+    "step": "Read and analyze backend pom.xml dependencies and boilerplate structure",
+    "sub_steps": [
+      "Open and review /home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/springapp/pom.xml to understand provided dependencies (Spring Boot, JPA, MySQL, Validation).",
+      "Note project structure, ensure MySQL is used, and confirm expected packages for entities, repositories, services, controllers.",
+      "Check RealEstateListingManagementSystemApplication.java for base package information."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/springapp/pom.xml"
+    ],
+    "description": "This step is crucial to understand what libraries are available and to verify the foundational setup for implementing the Spring Boot backend according to requirements."
+  },
+  {
+    "step": "Implement Property Entity and Validation",
+    "sub_steps": [
+      "Create Property.java under the correct package (com.examly.springapp.model or equivalent).",
+      "Define fields with appropriate types, add JPA and validation annotations (e.g., @Id, @GeneratedValue, @Column, @NotNull, @Size, @Positive, etc.).",
+      "Implement field-level constraints for required fields and field lengths.",
+      "Use @Entity and @Table annotations as necessary."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/springapp/src/main/java/com/examly/springapp/model/Property.java"
+    ],
+    "files_to_edit": [],
+    "description": "Defines the main data model for properties, ensures all validation and JPA mapping requirements are met per the specification. This sets the foundation for all subsequent layers."
+  },
+  {
+    "step": "Implement PropertyRepository",
+    "sub_steps": [
+      "Create PropertyRepository.java interface in the repository package (com.examly.springapp.repository or equivalent).",
+      "Extend JpaRepository<Property, Long>.",
+      "Define custom query methods for filtering by price, bedrooms, city using Spring Data JPA method naming conventions or @Query annotations as needed."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/springapp/src/main/java/com/examly/springapp/repository/PropertyRepository.java"
+    ],
+    "files_to_edit": [],
+    "description": "Allows data access for Property entities, providing CRUD and filter/search capabilities as required by business logic and endpoints."
+  },
+  {
+    "step": "Implement PropertyService with business logic",
+    "sub_steps": [
+      "Create PropertyService.java and PropertyServiceImpl.java in service package.",
+      "Define methods to add new property, get all properties, get property by ID, and filter properties by criteria.",
+      "Inject PropertyRepository and handle business logic, including throwing exceptions for not found, handling validation, etc."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/springapp/src/main/java/com/examly/springapp/service/PropertyService.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/springapp/src/main/java/com/examly/springapp/service/PropertyServiceImpl.java"
+    ],
+    "files_to_edit": [],
+    "description": "Implements business logic required for all property-related operations, ensuring correct delegation to the data access layer and applying business rules (e.g., validation, not found handling)."
+  },
+  {
+    "step": "Implement PropertyController with REST endpoints and exception handling",
+    "sub_steps": [
+      "Create PropertyController.java in controller package.",
+      "Define REST endpoints: POST /api/properties, GET /api/properties, GET /api/properties/{id}, GET /api/properties/filter.",
+      "Integrate validation (using @Valid), proper status codes (201, 200, 400, 404), and return appropriate error messages.",
+      "Handle field validation errors and resource not found exceptions via @ExceptionHandler or @ControllerAdvice as needed.",
+      "Implement CORS configuration to allow access from the React frontend."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/springapp/src/main/java/com/examly/springapp/controller/PropertyController.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/springapp/src/main/java/com/examly/springapp/config/CorsConfig.java"
+    ],
+    "files_to_edit": [],
+    "description": "Exposes the backend functionality as RESTful endpoints, enforcing validation, business logic, status codes, and error handling conforming to the question requirements and enabling frontend integration."
+  },
+  {
+    "step": "Implement ALL Backend Test Cases with JUnit for Property functionality",
+    "sub_steps": [
+      "For createPropertyTest: Add test methods to check property creation, validation errors (missing fields, invalid values).",
+      "For getPropertiesTest: Add test methods to check retrieving all properties, including empty list scenario.",
+      "For getPropertyByIdTest: Add tests for retrieving by valid and invalid (non-existent) ID.",
+      "For filterPropertiesTest: Add tests that cover the filtering endpoint for various scenarios (price range, bedrooms, city, combined, and empty results).",
+      "Use @SpringBootTest or WebMvcTest with Mockito for service/repository mocking as needed.",
+      "Add or edit PropertyControllerTest.java or similarly named test in the test directory."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/springapp/src/test/java/com/examly/springapp/controller/PropertyControllerTest.java"
+    ],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/springapp/src/test/java/com/examly/springapp/RealEstateListingManagementSystemApplicationTests.java"
+    ],
+    "description": "Fully implements the backend testing requirements as defined in the test cases, covering both positive and negative scenarios according to question and JSON test mapping."
+  },
+  {
+    "step": "Compile and run backend (Spring Boot) - Build and Test",
+    "sub_steps": [
+      "In /home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/springapp, run: mvn clean compile -q -Dspring.main.banner-mode=off",
+      "Then run: mvn test -q -Dspring.main.banner-mode=off",
+      "Then run: mvn clean install -q -Dspring.main.banner-mode=off"
+    ],
+    "files_to_add": [],
+    "files_to_edit": [],
+    "description": "Ensures the backend is correctly compiled, all tests are passing, and the project is ready for integration with the frontend."
+  },
+  {
+    "step": "Read and analyze frontend package.json dependencies and boilerplate structure",
+    "sub_steps": [
+      "Open and review /home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp/package.json and note dependencies (React, axios, testing-library/react, etc.).",
+      "Check existing files under src/ for structure and entry points.",
+      "Plan component and utility file locations according to the observed structure."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp/package.json"
+    ],
+    "description": "Lays the foundation for implementation by understanding the frontend project's module setup and dependencies, which affect API integration and component patterns."
+  },
+  {
+    "step": "Implement PropertyList component and tests",
+    "sub_steps": [
+      "Create PropertyList.js in components/.",
+      "Implement a component to display a list of property cards with title, price (formatted), bedrooms, bathrooms, area, and city.",
+      "Add click handler to select property for detail view (lift state to parent or via props).",
+      "Style grid/list per UI requirements with consistent design.",
+      "Immediately create PropertyList.test.js for all related test cases: rendering, API mocking, formatting, interaction."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp/src/components/PropertyList.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp/src/components/PropertyList.test.js"
+    ],
+    "files_to_edit": [],
+    "description": "Implements the main property list view with the required data, user interactions, and styling as needed for both display and test case compliance."
+  },
+  {
+    "step": "Implement PropertyDetail component and tests",
+    "sub_steps": [
+      "Create PropertyDetail.js in components/.",
+      "Display complete details for the selected property: title, description, price, bedrooms, bathrooms, area, address, city, state, zipCode, propertyType, listingDate, availability.",
+      "Add a \"Back to List\" button/option and wire up callback.",
+      "Style the component in accordance with UI requirements (panel/card layout, label/value pairs).",
+      "Create PropertyDetail.test.js covering rendering of all attributes for valid property, click of Back button."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp/src/components/PropertyDetail.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp/src/components/PropertyDetail.test.js"
+    ],
+    "files_to_edit": [],
+    "description": "Provides detailed view for a property and supports user navigation, covering requirements for scenario-based and attribute rendering in tests."
+  },
+  {
+    "step": "Implement PropertyFilter component and tests",
+    "sub_steps": [
+      "Create PropertyFilter.js in components/.",
+      "Add inputs for minPrice, maxPrice, bedrooms, city; bind to state.",
+      "Add 'Filter' button to trigger API calls to filter endpoint; a 'Clear' button resets all inputs.",
+      "Handle loading and error scenarios on filter API calls.",
+      "Create PropertyFilter.test.js to mock API and check interactions, input clear, and resulting list updates."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp/src/components/PropertyFilter.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp/src/components/PropertyFilter.test.js"
+    ],
+    "files_to_edit": [],
+    "description": "Implements the property filtering feature and all associated tests, providing state management for input fields and seamless integration with the listing, covering all filter/test requirements."
+  },
+  {
+    "step": "Implement frontend API utility functions",
+    "sub_steps": [
+      "Create api.js in utils/.",
+      "Implement fetchAllProperties(), fetchPropertyById(id), filterProperties(criteria), each using axios or fetch with correct API URLs and error handling.",
+      "Export functions for use in components.",
+      "Ensure error responses are handled and propagated for UI display."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp/src/utils/api.js"
+    ],
+    "files_to_edit": [],
+    "description": "Centralizes all API calls, abstracts error handling, and allows for simple mocking in tests. Enables consistent API usage across components."
+  },
+  {
+    "step": "Integrate components in App.js with state management and UI composition",
+    "sub_steps": [
+      "Edit App.js to import PropertyList, PropertyDetail, and PropertyFilter; manage global state as needed for properties, selected property, and filter criteria.",
+      "Wire up data flow and handlers (select/deselect property, apply/clear filters, etc.)",
+      "Display loading indicators, error messages, and empty states as required.",
+      "Apply overall CSS layout and ensure responsive design.",
+      "Reference and update App.css as needed for consistent application-wide styling and CSS variables."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp/src/App.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp/src/App.css"
+    ],
+    "description": "Brings together all components, manages shared state, and provides the main user interface including loading/error/empty handling, as well as the glue logic for navigation between list/detail and applying filters."
+  },
+  {
+    "step": "Implement ALL Frontend Test Cases with React Testing Library/Jest",
+    "sub_steps": [
+      "For renderPropertyListTest: In PropertyList.test.js, mock API call for all properties, verify render, correct cards, title/price/fields, price formatting.",
+      "For propertyFilteringTest: In PropertyFilter.test.js, render filter form, simulate input/clear, test filter button, mock API, check filtered results.",
+      "For propertyDetailViewTest: In PropertyDetail.test.js, simulate click from PropertyList, check all property attributes, test Back button navigation.",
+      "For apiErrorHandlingTest: In App.test.js or relevant component test, mock API failures, display error, check loading indicator, test application resilience.",
+      "Use async patterns, waitFor, proper data-testid selectors, and API mocks matching test case descriptions.",
+      "No manual cleanup() calls; ensure fresh renders per scenario as per guidelines."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp/src/App.test.js"
+    ],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp/src/components/PropertyList.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp/src/components/PropertyDetail.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp/src/components/PropertyFilter.test.js"
+    ],
+    "description": "Ensures every frontend functionality is tested as prescribed\u2014list rendering, filtering, detail view, and error/loading handling\u2014with proper isolation, no ambiguous selectors, and strict mapping to test names and requirements."
+  },
+  {
+    "step": "Compile and run frontend (React) - Build, Lint, and Test",
+    "sub_steps": [
+      "In /home/coder/project/workspace/question_generation_service/solutions/a58cad67-f13a-415f-9eb9-069550f67951/reactapp, run: npm install",
+      "Then run: npm run build",
+      "Then run: npx eslint src/ --fix",
+      "Then run: npm run test:ci"
+    ],
+    "files_to_add": [],
+    "files_to_edit": [],
+    "description": "Verifies that the React app builds successfully, is lint-free, and passes all supplied Jest/RTL tests, confirming readiness for deployment and functional correctness."
+  }
+]
