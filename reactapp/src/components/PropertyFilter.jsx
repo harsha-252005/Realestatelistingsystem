@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './PropertyFilter.css';
 
 const PropertyFilter = ({ onFilter, onClear, loading }) => {
   const [minPrice, setMinPrice] = useState("");
@@ -33,56 +34,87 @@ const PropertyFilter = ({ onFilter, onClear, loading }) => {
 
   return (
     <div data-testid="property-filter" className="filter-container">
-      <h3>Filter Properties</h3>
+      <div className="filter-header">
+        <h3>🔍 Filter Properties</h3>
+      </div>
+      
+      <div className="filter-grid">
+        <div className="filter-group">
+          <label className="filter-label">
+            💰 Minimum Price:
+            <input
+              type="number"
+              className="filter-input"
+              placeholder="e.g. 100000"
+              aria-label="Minimum Price"
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value)}
+            />
+          </label>
+        </div>
 
-      <label>
-        Minimum Price:
-        <input
-          type="number"
-          aria-label="Minimum Price"
-          value={minPrice}
-          onChange={(e) => setMinPrice(e.target.value)}
-        />
-      </label>
+        <div className="filter-group">
+          <label className="filter-label">
+            💰 Maximum Price:
+            <input
+              type="number"
+              className="filter-input"
+              placeholder="e.g. 500000"
+              aria-label="Maximum Price"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+            />
+          </label>
+        </div>
 
-      <label>
-        Maximum Price:
-        <input
-          type="number"
-          aria-label="Maximum Price"
-          value={maxPrice}
-          onChange={(e) => setMaxPrice(e.target.value)}
-        />
-      </label>
+        <div className="filter-group">
+          <label className="filter-label">
+            🛏️ Bedrooms:
+            <input
+              type="number"
+              className="filter-input"
+              placeholder="e.g. 3"
+              aria-label="Bedrooms"
+              value={bedrooms}
+              onChange={(e) => setBedrooms(e.target.value)}
+            />
+          </label>
+        </div>
 
-      <label>
-        Bedrooms:
-        <input
-          type="number"
-          aria-label="Bedrooms"
-          value={bedrooms}
-          onChange={(e) => setBedrooms(e.target.value)}
-        />
-      </label>
+        <div className="filter-group">
+          <label className="filter-label">
+            📍 City:
+            <input
+              type="text"
+              className="filter-input"
+              placeholder="e.g. New York"
+              aria-label="City"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </label>
+        </div>
+      </div>
 
-      <label>
-        City:
-        <input
-          type="text"
-          aria-label="City"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        />
-      </label>
+      {error && <div data-testid="filter-error" className="filter-error">{error}</div>}
 
-      {error && <div data-testid="filter-error">{error}</div>}
-
-      <button data-testid="filter-button" onClick={handleFilter} disabled={loading}>
-        {loading ? "Loading..." : "Filter"}
-      </button>
-      <button data-testid="clear-button" onClick={handleClear}>
-        Clear
-      </button>
+      <div className="filter-actions">
+        <button 
+          data-testid="filter-button" 
+          className="filter-btn primary"
+          onClick={handleFilter} 
+          disabled={loading}
+        >
+          {loading ? "Loading..." : "🔍 Filter"}
+        </button>
+        <button 
+          data-testid="clear-button" 
+          className="filter-btn secondary"
+          onClick={handleClear}
+        >
+          🗑️ Clear
+        </button>
+      </div>
     </div>
   );
 };

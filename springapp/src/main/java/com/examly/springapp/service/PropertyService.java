@@ -1,7 +1,7 @@
 package com.examly.springapp.service;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -52,7 +52,7 @@ public class PropertyService {
         property.setZipCode(propertyDetails.getZipCode());
         property.setPropertyType(propertyDetails.getPropertyType());
         property.setListingDate(propertyDetails.getListingDate()!=null ? propertyDetails.getListingDate():LocalDate.now());
-        property.setIsAvailable(propertyDetails.isIsAvailable());
+        property.setAvailable(propertyDetails.isAvailable());
         return propertyRepository.save(property);
         
     }

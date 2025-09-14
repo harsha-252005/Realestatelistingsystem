@@ -1,4 +1,5 @@
 import React from 'react';
+import './PropertyDetail.css';
 
 const formatPrice = (price) => `$${price.toLocaleString()}`;
 
@@ -7,34 +8,73 @@ const PropertyDetail = ({ property, onBack }) => {
 
   return (
     <div data-testid="property-detail" className="property-detail">
-      <button data-testid="back-button" onClick={onBack}>Back</button>
+      <div className="detail-header">
+        <button data-testid="back-button" className="back-btn" onClick={onBack}>
+          ← Back to Properties
+        </button>
+      </div>
 
-      <h2>{property.title}</h2>
+      <div className="detail-content">
+        <div className="detail-main">
+          <div className="property-hero">
+            <div className="property-image-large">
+              <div className="property-status-large">
+                {property.isAvailable ? 'Available' : 'Sold'}
+              </div>
+            </div>
+          </div>
 
-      {/* Description */}
-      <p>{property.description}</p>
+          <div className="property-info">
+            <h2 className="detail-title">{property.title}</h2>
+            <p className="detail-price">{formatPrice(property.price)}</p>
+            <p className="detail-description">{property.description}</p>
 
-      {/* Price formatted exactly as $#,### */}
-      <p>{formatPrice(property.price)}</p>
+            <div className="detail-features">
+              <div className="feature-item">
+                <span className="feature-icon">🛏️</span>
+                <span className="feature-text">Bedrooms: {property.bedrooms}</span>
+              </div>
+              <div className="feature-item">
+                <span className="feature-icon">🚿</span>
+                <span className="feature-text">Bathrooms: {property.bathrooms}</span>
+              </div>
+              <div className="feature-item">
+                <span className="feature-icon">📐</span>
+                <span className="feature-text">Area: {property.area} sqft</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      {/* Individual attributes on separate lines (tests look for plain text like 'Apartment' and '60607') */}
-      <p>Bedrooms: {property.bedrooms}</p>
-      <p>Bathrooms: {property.bathrooms}</p>
-      <p>Area: {property.area} sqft</p>
+        <div className="detail-sidebar">
+          <div className="info-card">
+            <h3>Property Details</h3>
+            <div className="info-item">
+              <span className="info-label">Type:</span>
+              <span className="info-value">{property.propertyType}</span>
+            </div>
+            <div className="info-item">
+              <span className="info-label">Listed:</span>
+              <span className="info-value">{property.listingDate}</span>
+            </div>
+            <div className="info-item">
+              <span className="info-label">Status:</span>
+              <div aria-label="Available:" className="availability-status">
+                {property.isAvailable ? 'Yes' : 'No'}
+              </div>
+            </div>
+          </div>
 
-      <p>{property.address}</p>
-      <p>{property.city}</p>
-      <p>{property.state}</p>
-      {/* Zip must appear as plain text so getByText('60607') finds it */}
-      <p>{property.zipCode}</p>
-
-      {/* propertyType should appear as plain text (test checks for 'Apartment') */}
-      <p>{property.propertyType}</p>
-
-      <p>{property.listingDate}</p>
-
-      {/* Element with aria-label so getByLabelText(/Available:/i) finds it */}
-      <div aria-label="Available:">{property.isAvailable ? 'Yes' : 'No'}</div>
+          <div className="info-card">
+            <h3>Location</h3>
+            <div className="location-info">
+              <p className="address">{property.address}</p>
+              <p className="city-state">{property.city}, {property.state}</p>
+              <p className="zip">{property.zipCode}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

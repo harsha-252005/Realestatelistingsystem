@@ -1,0 +1,34 @@
+/* Access Control Styles */
+.access-denied {
+  text-align: center;
+  padding: 100px 20px;
+  font-size: 1.5rem;
+  color: #e74c3c;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  margin: 40px auto;
+  max-width: 600px;
+}
+
+.admin-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.admin-page h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.admin-page p {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
