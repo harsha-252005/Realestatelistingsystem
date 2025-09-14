@@ -38,15 +38,15 @@ export const loginUser = async (username, password) => {
   }
 };
 
-export const signupUser = async (username, email, password) => {
+export const signupUser = async (username, email, password, role) => {
   try {
-    console.log('Attempting signup for:', username);
+    console.log('Attempting signup for:', username, 'as', role);
     const response = await fetch(`${API_BASE_URL}/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, email, password })
+      body: JSON.stringify({ username, email, password, role })
     });
     
     console.log('Signup response status:', response.status);

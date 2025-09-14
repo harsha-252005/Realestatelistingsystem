@@ -7,7 +7,8 @@ const Signup = ({ onSignup, onSwitchToLogin }) => {
     username: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: 'BUYER'
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -38,7 +39,7 @@ const Signup = ({ onSignup, onSwitchToLogin }) => {
     }
 
     try {
-      const data = await signupUser(formData.username, formData.email, formData.password);
+      const data = await signupUser(formData.username, formData.email, formData.password, formData.role);
       localStorage.setItem('user', JSON.stringify(data.user));
       onSignup(data.user);
     } catch (err) {
@@ -79,6 +80,19 @@ const Signup = ({ onSignup, onSwitchToLogin }) => {
               className="form-input"
               placeholder="Enter your email"
             />
+          </div>
+
+          <div className="form-group">
+            <label>I am a</label>
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className="form-input"
+            >
+              <option value="BUYER">Buyer - Browse and view properties</option>
+              <option value="SELLER">Seller - Add and manage properties</option>
+            </select>
           </div>
 
           <div className="form-group">

@@ -29,15 +29,31 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody User user) {
-        if (userRepository.existsByUsername(user.getUsername())) {
+    public ResponseEntity<?> registerUser(@RequestBody Map<String, String> signupRequest) {
+        String username = signupRequest.get("username");
+        String email = signupRequest.get("email");
+        String password = signupRequest.get("password");
+        String roleStr = signupRequest.get("role");
+
+        if (userRepository.existsByUsername(username)) {
             return ResponseEntity.badRequest()
                     .body(Map.of("message", "Username is already taken!"));
         }
 
-        if (userRepository.existsByEmail(user.getEmail())) {
+        if (userRepository.existsByEmail(email)) {
             return ResponseEntity.badRequest()
                     .body(Map.of("message", "Email is already in use!"));
+        }
+
+        User user = new User();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
+        
+        if ("SELLER".equals(roleStr)) {
+            user.setRole(User.Role.SELLER);
+        } else {
+            user.setRole(User.Role.BUYER);
         }
 
         User savedUser = userRepository.save(user);

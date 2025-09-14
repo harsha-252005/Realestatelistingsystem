@@ -17,28 +17,20 @@ const Navigation = ({ currentPage, onNavigate, user, onLogout }) => {
           >
             Home
           </button>
-          {user && (
+          {user && user.role === 'BUYER' && (
             <button 
               className={`nav-link ${currentPage === 'properties' ? 'active' : ''}`}
               onClick={() => onNavigate('properties')}
             >
-              Properties
+              Browse Properties
             </button>
           )}
-          {user && (
+          {user && user.role === 'SELLER' && (
             <button 
               className={`nav-link ${currentPage === 'add-property' ? 'active' : ''}`}
               onClick={() => onNavigate('add-property')}
             >
               Add Property
-            </button>
-          )}
-          {user && user.role === 'ADMIN' && (
-            <button 
-              className={`nav-link ${currentPage === 'admin' ? 'active' : ''}`}
-              onClick={() => onNavigate('admin')}
-            >
-              Admin
             </button>
           )}
         </div>

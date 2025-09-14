@@ -24,21 +24,21 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         // Create test users
         if (userRepository.count() == 0) {
-            // Admin user
-            User admin = new User();
-            admin.setUsername("admin");
-            admin.setEmail("admin@realestate.com");
-            admin.setPassword("admin123");
-            admin.setRole(User.Role.ADMIN);
-            userRepository.save(admin);
+            // Buyer user
+            User buyer = new User();
+            buyer.setUsername("buyer");
+            buyer.setEmail("buyer@realestate.com");
+            buyer.setPassword("buyer123");
+            buyer.setRole(User.Role.BUYER);
+            userRepository.save(buyer);
 
-            // Regular user
-            User user = new User();
-            user.setUsername("user");
-            user.setEmail("user@realestate.com");
-            user.setPassword("user123");
-            user.setRole(User.Role.USER);
-            userRepository.save(user);
+            // Seller user
+            User seller = new User();
+            seller.setUsername("seller");
+            seller.setEmail("seller@realestate.com");
+            seller.setPassword("seller123");
+            seller.setRole(User.Role.SELLER);
+            userRepository.save(seller);
 
             System.out.println("Test users created!");
         }

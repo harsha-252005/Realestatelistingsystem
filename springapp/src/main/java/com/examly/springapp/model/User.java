@@ -26,10 +26,10 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Role role = Role.USER;
+    private Role role = Role.BUYER;
 
     public enum Role {
-        USER, ADMIN
+        BUYER, SELLER
     }
 
     public User() {}

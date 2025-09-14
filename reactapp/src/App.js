@@ -71,11 +71,12 @@ const App = () => {
   };
 
   const handleNavigate = (page) => {
-    if (page === 'properties' && !user) {
+    if (page === 'properties' && (!user || user.role !== 'BUYER')) {
       setCurrentPage('login');
       return;
     }
-    if (page === 'admin' && (!user || user.role !== 'ADMIN')) {
+    if (page === 'add-property' && (!user || user.role !== 'SELLER')) {
+      setCurrentPage('login');
       return;
     }
     setCurrentPage(page);
@@ -130,14 +131,13 @@ const App = () => {
           />
         );
       case 'properties':
-        if (!user) {
-          setCurrentPage('login');
-          return null;
+        if (!user || user.role !== 'BUYER') {
+          return <div className="access-denied">Access Denied: Buyers Only</div>;
         }
         return (
           <div className="properties-page">
             <div className="page-header">
-              <h1>Properties</h1>
+              <h1>Browse Properties</h1>
               <p>Find your perfect property from our extensive collection</p>
             </div>
             <PropertyFilter
@@ -154,25 +154,14 @@ const App = () => {
           </div>
         );
       case 'add-property':
-        if (!user) {
-          setCurrentPage('login');
-          return null;
+        if (!user || user.role !== 'SELLER') {
+          return <div className="access-denied">Access Denied: Sellers Only</div>;
         }
         return (
           <AddProperty 
             onPropertyAdded={handlePropertyAdded}
-            onCancel={() => setCurrentPage('properties')}
+            onCancel={() => setCurrentPage('home')}
           />
-        );
-      case 'admin':
-        if (!user || user.role !== 'ADMIN') {
-          return <div className="access-denied">Access Denied: Admin Only</div>;
-        }
-        return (
-          <div className="admin-page">
-            <h1>Admin Dashboard</h1>
-            <p>Welcome, {user.username}! You have admin access.</p>
-          </div>
         );
       default:
         return <HomePage onNavigate={handleNavigate} user={user} />;
